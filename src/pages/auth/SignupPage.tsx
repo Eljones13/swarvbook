@@ -1,9 +1,12 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 
 export function SignupPage() {
+  const [searchParams] = useSearchParams();
+  const refCode = searchParams.get("ref");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -55,6 +58,17 @@ export function SignupPage() {
         <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "1.5rem" }}>
           Create Account
         </h1>
+
+        {/* Referral notice — shown when ?ref=CODE is present in the URL.
+            TODO: pass refCode to your Supabase Edge Function / RPC so both
+            the referrer and new client receive their 10% discount credit. */}
+        {refCode && (
+          <div style={referralBannerStyle}>
+            <span style={{ fontWeight: 600, color: "#93c5fd" }}>You were referred!</span>
+            {" "}Sign up now and you'll both get <strong>10% off</strong> your next
+            haircut. Referral code: <code style={{ color: "#93c5fd" }}>{refCode}</code>
+          </div>
+        )}
 
         {error && <p style={errorStyle}>{error}</p>}
 
@@ -143,6 +157,17 @@ const btnStyle: React.CSSProperties = {
   fontSize: "0.9rem",
   fontWeight: 600,
   cursor: "pointer",
+};
+
+const referralBannerStyle: React.CSSProperties = {
+  marginBottom: "1rem",
+  padding: "0.6rem 0.75rem",
+  borderRadius: "0.375rem",
+  backgroundColor: "#0a1628",
+  border: "1px solid #1e3a5f",
+  color: "#94a3b8",
+  fontSize: "0.83rem",
+  lineHeight: 1.5,
 };
 
 const errorStyle: React.CSSProperties = {

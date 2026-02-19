@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { useClientByEmail } from "../hooks/useClientByEmail";
+import { useClientByEmail, useReferralInfo } from "../hooks/useClientByEmail";
 import { useClientBookings, useCancelBooking, canCancelBooking } from "../hooks/useBookings";
 import { ShopInfoBanner } from "../components/ShopInfoBanner";
+import { RecommendFriendCard } from "../components/RecommendFriendCard";
 import type { BookingWithDetails, BookingStatus } from "../types/booking";
 
 // ─── component ────────────────────────────────────────────────────────────────
@@ -15,6 +16,7 @@ export function ClientMyBookingsPage() {
     clientRow?.id ?? null
   );
   const cancelBooking = useCancelBooking();
+  const { data: referral } = useReferralInfo();
 
   if (!session) {
     return (
@@ -79,6 +81,8 @@ export function ClientMyBookingsPage() {
             ))}
           </div>
         )}
+
+        <RecommendFriendCard referral={referral ?? null} />
       </main>
     </div>
   );

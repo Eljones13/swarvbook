@@ -1,3 +1,7 @@
+// TODO: add a `discount_type` column to the bookings table in Supabase:
+//   ALTER TABLE bookings ADD COLUMN discount_type TEXT DEFAULT 'none';
+export type DiscountType = "none" | "referral_10";
+
 export type BookingStatus =
   | "pending"
   | "confirmed"
@@ -39,6 +43,7 @@ export interface Booking {
   end_time: string;
   status: BookingStatus;
   notes: string | null;
+  discount_type?: DiscountType | null;
   created_at: string;
 }
 

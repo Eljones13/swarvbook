@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "./useAuth";
 import type { Client } from "./useClients";
+import { getReferralInfo } from "../lib/referrals";
+import type { ReferralInfo } from "../lib/referrals";
 
 // TODO (Supabase RLS): clients must be able to SELECT their own row:
 //   CREATE POLICY "client_read_own_profile" ON clients
@@ -31,4 +33,16 @@ export function useClientByEmail() {
     queryFn: () => fetchClientByEmail(email!),
     enabled: !!email,
   });
+}
+
+/**
+ * Derives the signed-in client's referral code and shareable URL.
+ * Returns `data: null` while the client row is loading or not found.
+ */
+export function useReferralInfo(): { data: ReferralInfo | null; isLoading: boolean } {
+  const { data: client, isLoading } = useClientByEmail();
+  return {
+    data: client ? getReferralInfo(client) : null,
+    isLoading,
+  };
 }
