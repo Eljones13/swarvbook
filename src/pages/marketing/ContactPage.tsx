@@ -8,6 +8,17 @@ import {
   containerStyle,
 } from "../../styles/ui";
 
+// ─── Real hours ───────────────────────────────────────────────────────────────
+const HOURS = [
+  { day: "Monday", hours: "Closed" },
+  { day: "Tuesday", hours: "Closed" },
+  { day: "Wednesday", hours: "10:00 am – 8:00 pm" },
+  { day: "Thursday", hours: "10:00 am – 8:00 pm" },
+  { day: "Friday", hours: "9:00 am – 8:00 pm" },
+  { day: "Saturday", hours: "9:00 am – 6:00 pm" },
+  { day: "Sunday", hours: "Closed" },
+];
+
 interface FormState {
   name: string;
   email: string;
@@ -28,18 +39,21 @@ export function ContactPage() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [sent, setSent] = useState(false);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // TODO: wire up to actual email / Supabase function
+    // TODO: wire up to Supabase function / email service
     setSent(true);
   }
 
   return (
     <div style={{ backgroundColor: colors.bg, color: colors.text }}>
+
       {/* Page header */}
       <section style={pageHeaderStyle}>
         <div style={{ ...containerStyle, textAlign: "center" }}>
@@ -48,7 +62,7 @@ export function ContactPage() {
             Contact Us
           </h1>
           <p style={pageSubStyle}>
-            Questions, inquiries, or just want to say hi? We'd love to hear from you.
+            Questions about booking, services, or anything else — we're here to help.
           </p>
         </div>
       </section>
@@ -57,41 +71,58 @@ export function ContactPage() {
       <section style={{ padding: "5rem 1.25rem" }}>
         <div style={containerStyle}>
           <div style={contactGridStyle}>
-            {/* Contact info */}
+
+            {/* Studio info */}
             <div>
               <h2 style={{ ...sectionTitleStyle, fontSize: "1.5rem", marginBottom: "1.5rem" }}>
                 Studio Info
               </h2>
 
-              {[
-                {
-                  icon: "📍",
-                  label: "Address",
-                  value: "123 Barber Lane, Suite 4\nLos Angeles, CA 90001",
-                },
-                { icon: "📞", label: "Phone", value: "(310) 555-0182" },
-                { icon: "✉️", label: "Email", value: "errol@swarvstudio.com" },
-                { icon: "📸", label: "Instagram", value: "@swarvstudio" },
-              ].map((info) => (
-                <div key={info.label} style={{ ...cardStyle, marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "flex-start" }}>
-                  <span style={{ fontSize: "1.4rem" }}>{info.icon}</span>
-                  <div>
-                    <p style={infoLabelStyle}>{info.label}</p>
-                    <p style={infoValueStyle}>{info.value}</p>
-                  </div>
+              {/* Address */}
+              <div style={{ ...cardStyle, marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <span style={infoIconStyle}>📍</span>
+                <div>
+                  <p style={infoLabelStyle}>Address</p>
+                  <p style={infoValueStyle}>
+                    92 Harwood Street, Unit 8<br />
+                    Sheffield S2 4SE
+                  </p>
+                  <p style={infoNoteStyle}>Opposite Sheffield United Stadium</p>
                 </div>
-              ))}
+              </div>
 
-              <div style={{ ...cardStyle, marginTop: "1.5rem" }}>
-                <p style={infoLabelStyle}>Hours</p>
-                {[
-                  { day: "Mon – Fri", hours: "9:00 AM – 7:00 PM" },
-                  { day: "Saturday", hours: "9:00 AM – 6:00 PM" },
-                  { day: "Sunday", hours: "Closed" },
-                ].map((h) => (
+              {/* Phone */}
+              <div style={{ ...cardStyle, marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <span style={infoIconStyle}>📞</span>
+                <div>
+                  <p style={infoLabelStyle}>Phone</p>
+                  <a href="tel:07577378237" style={phoneLinkStyle}>07577 378237</a>
+                </div>
+              </div>
+
+              {/* Booking policy */}
+              <div style={{ ...cardStyle, marginBottom: "1rem", display: "flex", gap: "1rem", alignItems: "flex-start" }}>
+                <span style={infoIconStyle}>🗓️</span>
+                <div>
+                  <p style={infoLabelStyle}>Booking Policy</p>
+                  <p style={infoValueStyle}>Appointment only — no walk-ins</p>
+                  <p style={infoNoteStyle}>Same-day appointments available</p>
+                </div>
+              </div>
+
+              {/* Hours */}
+              <div style={{ ...cardStyle, marginTop: "0.5rem" }}>
+                <p style={{ ...infoLabelStyle, marginBottom: "0.75rem" }}>Opening Hours</p>
+                {HOURS.map((h) => (
                   <div key={h.day} style={hoursRowStyle}>
                     <span style={{ color: colors.textMuted, fontSize: "0.875rem" }}>{h.day}</span>
-                    <span style={{ color: colors.text, fontWeight: 600, fontSize: "0.875rem" }}>{h.hours}</span>
+                    <span style={{
+                      color: h.hours === "Closed" ? colors.textDim : colors.text,
+                      fontWeight: h.hours === "Closed" ? 500 : 600,
+                      fontSize: "0.875rem",
+                    }}>
+                      {h.hours}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -120,7 +151,10 @@ export function ContactPage() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} style={{ ...cardStyle, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <form
+                  onSubmit={handleSubmit}
+                  style={{ ...cardStyle, display: "flex", flexDirection: "column", gap: "1rem" }}
+                >
                   <div style={fieldRowStyle}>
                     <div style={fieldGroupStyle}>
                       <label style={labelStyle}>Name *</label>
@@ -155,7 +189,7 @@ export function ContactPage() {
                         type="tel"
                         value={form.phone}
                         onChange={handleChange}
-                        placeholder="(310) 555-0000"
+                        placeholder="07700 000000"
                         style={inputStyle}
                       />
                     </div>
@@ -170,7 +204,7 @@ export function ContactPage() {
                         <option value="">Select a subject…</option>
                         <option value="booking">Booking Enquiry</option>
                         <option value="pricing">Pricing Question</option>
-                        <option value="event">Private Event / Group</option>
+                        <option value="hair-type">Hair Type / Suitability</option>
                         <option value="other">Other</option>
                       </select>
                     </div>
@@ -234,21 +268,38 @@ const contactGridStyle: React.CSSProperties = {
   alignItems: "start",
 };
 
+const infoIconStyle: React.CSSProperties = {
+  fontSize: "1.4rem",
+  flexShrink: 0,
+};
+
 const infoLabelStyle: React.CSSProperties = {
   color: colors.textMuted,
   fontSize: "0.72rem",
   fontWeight: 700,
   textTransform: "uppercase",
   letterSpacing: "0.1em",
-  margin: "0 0 0.2rem",
+  margin: "0 0 0.25rem",
 };
 
 const infoValueStyle: React.CSSProperties = {
   color: colors.text,
   fontSize: "0.9rem",
   margin: 0,
-  whiteSpace: "pre-line",
   lineHeight: 1.6,
+};
+
+const infoNoteStyle: React.CSSProperties = {
+  color: colors.textMuted,
+  fontSize: "0.8rem",
+  margin: "0.2rem 0 0",
+};
+
+const phoneLinkStyle: React.CSSProperties = {
+  color: colors.accent,
+  textDecoration: "none",
+  fontWeight: 700,
+  fontSize: "1rem",
 };
 
 const hoursRowStyle: React.CSSProperties = {

@@ -8,32 +8,34 @@ import {
   containerStyle,
 } from "../../styles/ui";
 
-const values = [
+// ─── Highlight cards – from Swarv Studio ──────────────────────────────────────
+const highlights = [
   {
     icon: "✂️",
-    title: "Precision First",
-    desc: "Every fade, line, and detail is approached with surgical care. Good is never good enough.",
-  },
-  {
-    icon: "🤝",
-    title: "Respect & Relationship",
-    desc: "Clients aren't transactions. We learn your preferences and take time to know you.",
+    title: "Precision Cuts",
+    desc: "Tailored to your hair type",
   },
   {
     icon: "🕐",
-    title: "Your Time Matters",
-    desc: "We run on schedule. Online booking keeps things smooth and stress-free.",
+    title: "Punctual Service",
+    desc: "We respect your time",
   },
   {
-    icon: "🏆",
-    title: "Consistency",
-    desc: "Walk in expecting greatness every single time — that's the Swarv promise.",
+    icon: "🎓",
+    title: "Expert Knowledge",
+    desc: "34 years of experience",
+  },
+  {
+    icon: "🤝",
+    title: "Personal Attention",
+    desc: "Appointment-only setting",
   },
 ];
 
 export function AboutPage() {
   return (
     <div style={{ backgroundColor: colors.bg, color: colors.text }}>
+
       {/* Page header */}
       <section style={pageHeaderStyle}>
         <div style={{ ...containerStyle, textAlign: "center" }}>
@@ -41,6 +43,9 @@ export function AboutPage() {
           <h1 style={{ ...sectionTitleStyle, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
             About Swarv Studio
           </h1>
+          <p style={pageSubStyle}>
+            Sheffield's most trusted choice for specialised hair cutting expertise.
+          </p>
         </div>
       </section>
 
@@ -48,7 +53,8 @@ export function AboutPage() {
       <section style={bioSectionStyle}>
         <div style={containerStyle}>
           <div style={bioGridStyle}>
-            {/* Avatar placeholder */}
+
+            {/* Avatar + card */}
             <div style={avatarBlockStyle}>
               <div style={avatarStyle}>
                 <span style={avatarInitialsStyle}>EJ</span>
@@ -56,77 +62,81 @@ export function AboutPage() {
               <div style={{ ...cardStyle, marginTop: "1rem", textAlign: "center" }}>
                 <p style={barberNameStyle}>Errol Jones</p>
                 <p style={barberTitleStyle}>Owner & Master Barber</p>
-                <p style={barberTagStyle}>Swarv Studio</p>
+                <p style={barberTagStyle}>Swarv Studio · Sheffield</p>
+              </div>
+
+              {/* Highlight cards */}
+              <div style={highlightGridStyle}>
+                {highlights.map((h) => (
+                  <div key={h.title} style={{ ...cardStyle, ...highlightCardStyle }}>
+                    <span style={highlightIconStyle}>{h.icon}</span>
+                    <div>
+                      <p style={highlightTitleStyle}>{h.title}</p>
+                      <p style={highlightDescStyle}>{h.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Story */}
+            {/* Bio text */}
             <div>
-              <h2 style={{ ...sectionTitleStyle, marginBottom: "1.25rem" }}>
-                Crafting Confidence,<br />
-                <span style={{ color: colors.accent }}>One Cut at a Time</span>
+              <h2 style={{ ...sectionTitleStyle, marginBottom: "1.5rem" }}>
+                30+ Years of Craft,{" "}
+                <span style={{ color: colors.accent }}>One Chair at a Time</span>
               </h2>
+
               <p style={bioParaStyle}>
-                Errol Jones has spent over 8 years mastering the art of barbering, building a reputation
-                across Los Angeles for clean fades, precise lineups, and an unmatched eye for detail.
-                What started as a passion became a profession — and that passion shows in every cut.
+                Hi! I'm Errol Jones, and I've been working as a barber for over 34 years, gathering
+                extensive skills and knowledge about male grooming. Swarv Studio has been running for
+                over 10 years and has built a reputation for high-quality haircuts, a friendly
+                atmosphere, and exceptional attention to detail.
               </p>
+
               <p style={bioParaStyle}>
-                Swarv Studio isn't just a barbershop. It's a space where clients feel comfortable,
-                respected, and leave looking and feeling their best. The vibe is professional but
-                welcoming, and the standard is always high.
+                As an expert barber specialising in precision cuts for Afro, Asian, and European hair
+                types, I provide professional haircuts and beard grooming services in an
+                appointment-only setting, ensuring personalised attention for every client.
               </p>
+
               <p style={bioParaStyle}>
-                Whether you're coming in for a clean shape-up before a big event or a regular maintenance
-                fade, Errol brings the same dedication every single time. No rushing, no shortcuts.
+                Each cut is tailored to your unique hair texture and style preferences. I respect your
+                time with punctual service and guarantee exceptional grooming that boosts confidence
+                and showcases your individual style perfectly.
               </p>
+
+              <p style={bioDetailStyle}>
+                📍 92 Harwood Street, Unit 8, Sheffield S2 4SE<br />
+                Opposite Sheffield United Stadium
+              </p>
+
               <div style={{ marginTop: "2rem", display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                 <Link to="/auth/login?mode=client" style={primaryButtonStyle}>
                   Book with Errol
                 </Link>
-                <Link to="/services" style={outlineBtn}>
-                  View Services
-                </Link>
+                <a href="tel:07577378237" style={outlineBtn}>
+                  Call 07577 378237
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section style={valuesSectionStyle}>
-        <div style={containerStyle}>
-          <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-            <h2 style={sectionTitleStyle}>The Swarv Standard</h2>
-            <p style={{ color: colors.textMuted, fontSize: "1rem", marginTop: "0.5rem" }}>
-              What you can always expect when you sit in the chair.
-            </p>
-          </div>
-          <div style={valuesGridStyle}>
-            {values.map((v) => (
-              <div key={v.title} style={{ ...cardStyle, ...valueCardStyle }}>
-                <span style={valueIconStyle}>{v.icon}</span>
-                <h3 style={valueTitleStyle}>{v.title}</h3>
-                <p style={valueDescStyle}>{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Credentials */}
+      {/* Stats */}
       <section style={{ padding: "4rem 1.25rem", backgroundColor: colors.surface }}>
         <div style={containerStyle}>
           <div style={credsGridStyle}>
             {[
-              { stat: "8+", label: "Years of Experience" },
-              { stat: "500+", label: "Happy Clients" },
-              { stat: "100%", label: "Satisfaction Guaranteed" },
-              { stat: "5★", label: "Google Rating" },
+              { stat: "34+", label: "Years Experience", sub: "Since ~1990" },
+              { stat: "10+", label: "Years in Studio", sub: "Swarv Studio" },
+              { stat: "5.0★", label: "Star Rating", sub: "Customer satisfaction" },
+              { stat: "446+", label: "Reviews", sub: "On Booksy" },
             ].map((c) => (
               <div key={c.label} style={credItemStyle}>
                 <span style={credStatStyle}>{c.stat}</span>
-                <span style={{ color: colors.textMuted, fontSize: "0.85rem", textAlign: "center" }}>{c.label}</span>
+                <span style={credLabelStyle}>{c.label}</span>
+                <span style={credSubStyle}>{c.sub}</span>
               </div>
             ))}
           </div>
@@ -153,13 +163,21 @@ const pageTagStyle: React.CSSProperties = {
   margin: "0 0 0.75rem",
 };
 
+const pageSubStyle: React.CSSProperties = {
+  color: colors.textMuted,
+  fontSize: "1rem",
+  maxWidth: "480px",
+  margin: "0.75rem auto 0",
+  lineHeight: 1.65,
+};
+
 const bioSectionStyle: React.CSSProperties = {
   padding: "5rem 1.25rem",
 };
 
 const bioGridStyle: React.CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "300px 1fr",
+  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
   gap: "4rem",
   alignItems: "start",
 };
@@ -208,11 +226,53 @@ const barberTagStyle: React.CSSProperties = {
   margin: 0,
 };
 
+const highlightGridStyle: React.CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  gap: "0.75rem",
+  marginTop: "1.25rem",
+  width: "100%",
+};
+
+const highlightCardStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "flex-start",
+  gap: "0.6rem",
+  padding: "0.875rem",
+};
+
+const highlightIconStyle: React.CSSProperties = {
+  fontSize: "1.25rem",
+  flexShrink: 0,
+};
+
+const highlightTitleStyle: React.CSSProperties = {
+  color: colors.text,
+  fontWeight: 700,
+  fontSize: "0.8rem",
+  margin: "0 0 0.1rem",
+};
+
+const highlightDescStyle: React.CSSProperties = {
+  color: colors.textMuted,
+  fontSize: "0.75rem",
+  margin: 0,
+};
+
 const bioParaStyle: React.CSSProperties = {
   color: colors.textMuted,
   fontSize: "0.975rem",
   lineHeight: 1.75,
-  marginBottom: "1rem",
+  marginBottom: "1.1rem",
+};
+
+const bioDetailStyle: React.CSSProperties = {
+  color: colors.textMuted,
+  fontSize: "0.875rem",
+  lineHeight: 1.7,
+  borderLeft: `3px solid ${colors.accent}`,
+  paddingLeft: "0.875rem",
+  marginTop: "1.5rem",
 };
 
 const outlineBtn: React.CSSProperties = {
@@ -228,41 +288,6 @@ const outlineBtn: React.CSSProperties = {
   border: `1px solid ${colors.borderMid}`,
 };
 
-const valuesSectionStyle: React.CSSProperties = {
-  padding: "5rem 1.25rem",
-  backgroundColor: colors.bg,
-};
-
-const valuesGridStyle: React.CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-  gap: "1.25rem",
-};
-
-const valueCardStyle: React.CSSProperties = {
-  textAlign: "center",
-};
-
-const valueIconStyle: React.CSSProperties = {
-  fontSize: "2rem",
-  display: "block",
-  marginBottom: "0.75rem",
-};
-
-const valueTitleStyle: React.CSSProperties = {
-  color: colors.text,
-  fontWeight: 700,
-  fontSize: "1rem",
-  margin: "0 0 0.5rem",
-};
-
-const valueDescStyle: React.CSSProperties = {
-  color: colors.textMuted,
-  fontSize: "0.875rem",
-  margin: 0,
-  lineHeight: 1.6,
-};
-
 const credsGridStyle: React.CSSProperties = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
@@ -274,11 +299,26 @@ const credItemStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "0.4rem",
+  gap: "0.15rem",
 };
 
 const credStatStyle: React.CSSProperties = {
   fontSize: "2.25rem",
   fontWeight: 900,
   color: colors.accent,
+  lineHeight: 1,
+};
+
+const credLabelStyle: React.CSSProperties = {
+  color: colors.text,
+  fontSize: "0.8rem",
+  fontWeight: 700,
+  textTransform: "uppercase",
+  letterSpacing: "0.06em",
+  marginTop: "0.25rem",
+};
+
+const credSubStyle: React.CSSProperties = {
+  color: colors.textDim,
+  fontSize: "0.72rem",
 };

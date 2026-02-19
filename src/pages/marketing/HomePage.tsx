@@ -9,44 +9,105 @@ import {
   containerStyle,
 } from "../../styles/ui";
 
-// ─── Services preview data ────────────────────────────────────────────────────
-const services = [
-  { icon: "✂️", name: "Classic Fade", desc: "Clean tapered fade with precision lining.", price: "From $35" },
-  { icon: "🪒", name: "Beard Trim & Shape", desc: "Sculpted beard styling and hot towel finish.", price: "From $25" },
-  { icon: "💈", name: "Full Service Cut", desc: "Haircut + beard combo with premium styling.", price: "From $55" },
-  { icon: "✨", name: "Hair Design", desc: "Custom designs and patterns cut into your style.", price: "From $45" },
+// ─── Real hours ───────────────────────────────────────────────────────────────
+const HOURS = [
+  { day: "Monday", hours: "Closed" },
+  { day: "Tuesday", hours: "Closed" },
+  { day: "Wednesday", hours: "10:00 am – 8:00 pm" },
+  { day: "Thursday", hours: "10:00 am – 8:00 pm" },
+  { day: "Friday", hours: "9:00 am – 8:00 pm" },
+  { day: "Saturday", hours: "9:00 am – 6:00 pm" },
+  { day: "Sunday", hours: "Closed" },
 ];
 
-// ─── Testimonials data ────────────────────────────────────────────────────────
+// ─── Services preview ─────────────────────────────────────────────────────────
+const services = [
+  {
+    icon: "✂️",
+    name: "Adult Haircut",
+    desc: "Modern haircut with attention to detail. One of Sheffield's top contemporary barbershops.",
+    price: "From £20",
+    duration: "20 min",
+  },
+  {
+    icon: "🪒",
+    name: "Adult Haircut with Beard",
+    desc: "Haircut and beard trim in one visit. Precision and contemporary styling.",
+    price: "£23",
+    duration: "25 min",
+  },
+  {
+    icon: "👦",
+    name: "Child Trim (Under 12)",
+    desc: "A welcoming atmosphere where your child can get their trim.",
+    price: "From £16",
+    duration: "20 min",
+  },
+  {
+    icon: "🎓",
+    name: "Child Haircut (12–16)",
+    desc: "Stylish cuts for teenagers in a professional, relaxed setting.",
+    price: "£18",
+    duration: "",
+  },
+];
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
 const testimonials = [
-  { name: "Marcus T.", text: "Errol is the best barber I've ever had. My fade is always crisp and clean. Wouldn't go anywhere else.", stars: 5 },
-  { name: "Jordan R.", text: "Swarv Studio is the real deal. Professional atmosphere, great vibes, and immaculate work every time.", stars: 5 },
-  { name: "Damon W.", text: "Booked online in 30 seconds, walked in and was seated on time. The cut was fire. 10/10.", stars: 5 },
+  {
+    name: "Marcus Thompson",
+    service: "Adult Haircut with Beard",
+    date: "15 January 2024",
+    text: "Great experience. Errol is a master of his craft and really knows how to work with different hair types.",
+    stars: 5,
+  },
+  {
+    name: "James W.",
+    service: "Adult Haircut",
+    date: "Regular Client",
+    text: "Errol has been cutting my hair for years. Always precise, always on time. Couldn't recommend more highly.",
+    stars: 5,
+  },
+  {
+    name: "David K.",
+    service: "Child Trim",
+    date: "February 2024",
+    text: "Took my son here for his first proper haircut. Errol was patient and professional. Great experience.",
+    stars: 5,
+  },
 ];
 
 export function HomePage() {
   return (
     <div style={{ backgroundColor: colors.bg, color: colors.text }}>
+
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
       <section style={heroSection}>
         <div style={heroOverlay} />
         <div style={{ ...containerStyle, position: "relative", zIndex: 1, textAlign: "center" }}>
-          <p style={heroTagStyle}>Premier Barbershop · Los Angeles</p>
+          <p style={heroTagStyle}>Expert Barbershop · Sheffield</p>
           <h1 style={heroTitleStyle}>
-            Where Every Cut Is<br />
-            <span style={{ color: colors.accent }}>A Masterpiece</span>
+            Expert Precision<br />
+            <span style={{ color: colors.accent }}>Every Cut</span>
           </h1>
           <p style={heroSubStyle}>
-            Precision cuts, clean fades, and sharp styles by Errol Jones at Swarv Studio.
+            30+ years of experience specializing in Afro, Asian, and European hair types.
+            Located opposite Sheffield United stadium.
           </p>
-          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", marginTop: "2rem" }}>
+          <div style={heroBtnRowStyle}>
             <Link to="/auth/login?mode=client" style={primaryButtonStyle}>
-              Book Your Appointment
+              Book Appointment
             </Link>
-            <Link to="/services" style={secondaryButtonStyle}>
-              View Services
-            </Link>
+            <a href="tel:07577378237" style={secondaryButtonStyle}>
+              Call Now
+            </a>
           </div>
+          <p style={heroSmallPrintStyle}>
+            No walk-ins&nbsp;&nbsp;•&nbsp;&nbsp;Appointment only&nbsp;&nbsp;•&nbsp;&nbsp;Same-day appointments available
+          </p>
+          <p style={heroAddressStyle}>
+            📍 92 Harwood Street S2 4SE · Opposite Sheffield United Stadium
+          </p>
         </div>
       </section>
 
@@ -54,14 +115,15 @@ export function HomePage() {
       <section style={statsBgStyle}>
         <div style={{ ...containerStyle, ...statsInnerStyle }}>
           {[
-            { value: "500+", label: "Happy Clients" },
-            { value: "8+", label: "Years Experience" },
-            { value: "5★", label: "Average Rating" },
-            { value: "100%", label: "Satisfaction Guaranteed" },
+            { value: "34+", label: "Years Experience", sub: "Since 1990" },
+            { value: "446+", label: "Reviews", sub: "On Booksy" },
+            { value: "5.0★", label: "Star Rating", sub: "Customer satisfaction" },
+            { value: "10+", label: "Years in Studio", sub: "Serving Sheffield" },
           ].map((s) => (
             <div key={s.label} style={statItemStyle}>
               <span style={statValueStyle}>{s.value}</span>
               <span style={statLabelStyle}>{s.label}</span>
+              <span style={statSubStyle}>{s.sub}</span>
             </div>
           ))}
         </div>
@@ -73,7 +135,7 @@ export function HomePage() {
           <div style={sectionHeaderStyle}>
             <h2 style={sectionTitleStyle}>Our Services</h2>
             <p style={sectionSubStyle}>
-              Premium barbering services tailored to your look.
+              Professional haircuts and grooming services tailored to your style preferences.
             </p>
           </div>
           <div style={servicesGridStyle}>
@@ -82,13 +144,18 @@ export function HomePage() {
                 <span style={serviceIconStyle}>{s.icon}</span>
                 <h3 style={serviceNameStyle}>{s.name}</h3>
                 <p style={serviceDescStyle}>{s.desc}</p>
-                <p style={servicePriceStyle}>{s.price}</p>
+                <div style={serviceFooterStyle}>
+                  <span style={servicePriceStyle}>{s.price}</span>
+                  {s.duration && (
+                    <span style={serviceDurationStyle}>{s.duration}</span>
+                  )}
+                </div>
               </div>
             ))}
           </div>
           <div style={{ textAlign: "center", marginTop: "2rem" }}>
             <Link to="/services" style={secondaryButtonStyle}>
-              See Full Menu
+              View Full Service List
             </Link>
           </div>
         </div>
@@ -99,14 +166,19 @@ export function HomePage() {
         <div style={containerStyle}>
           <div style={sectionHeaderStyle}>
             <h2 style={sectionTitleStyle}>What Clients Say</h2>
-            <p style={sectionSubStyle}>Real talk from real regulars.</p>
+            <p style={sectionSubStyle}>
+              5.0 stars across 446+ reviews on Booksy.
+            </p>
           </div>
           <div style={testimonialsGridStyle}>
             {testimonials.map((t) => (
               <div key={t.name} style={{ ...cardStyle, ...testimonialCardStyle }}>
                 <p style={starsStyle}>{"★".repeat(t.stars)}</p>
                 <p style={testimonialTextStyle}>"{t.text}"</p>
-                <p style={testimonialNameStyle}>— {t.name}</p>
+                <div style={testimonialFooterStyle}>
+                  <p style={testimonialNameStyle}>{t.name}</p>
+                  <p style={testimonialMetaStyle}>{t.service} · {t.date}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -121,26 +193,37 @@ export function HomePage() {
               <h2 style={{ ...sectionTitleStyle, marginBottom: "1.5rem" }}>Find Us</h2>
               <div style={{ ...cardStyle, marginBottom: "1rem" }}>
                 <p style={infoLabelStyle}>📍 Address</p>
-                <p style={infoValueStyle}>123 Barber Lane, Suite 4<br />Los Angeles, CA 90001</p>
+                <p style={infoValueStyle}>
+                  92 Harwood Street, Unit 8<br />
+                  Sheffield S2 4SE
+                </p>
+                <p style={{ ...infoValueStyle, color: colors.textMuted, fontSize: "0.825rem", marginTop: "0.4rem" }}>
+                  Opposite Sheffield United Stadium
+                </p>
               </div>
               <div style={cardStyle}>
                 <p style={infoLabelStyle}>📞 Phone</p>
-                <p style={infoValueStyle}>(310) 555-0182</p>
-                <p style={{ ...infoLabelStyle, marginTop: "0.75rem" }}>✉️ Email</p>
-                <p style={infoValueStyle}>errol@swarvstudio.com</p>
+                <p style={infoValueStyle}>
+                  <a href="tel:07577378237" style={{ color: colors.accent, textDecoration: "none", fontWeight: 600 }}>
+                    07577 378237
+                  </a>
+                </p>
+                <p style={{ ...infoLabelStyle, marginTop: "0.75rem" }}>🗓️ Booking</p>
+                <p style={infoValueStyle}>Appointment only · No walk-ins<br />Same-day appointments available</p>
               </div>
             </div>
+
             <div>
-              <h2 style={{ ...sectionTitleStyle, marginBottom: "1.5rem" }}>Hours</h2>
+              <h2 style={{ ...sectionTitleStyle, marginBottom: "1.5rem" }}>Opening Hours</h2>
               <div style={cardStyle}>
-                {[
-                  { day: "Monday – Friday", hours: "9:00 AM – 7:00 PM" },
-                  { day: "Saturday", hours: "9:00 AM – 6:00 PM" },
-                  { day: "Sunday", hours: "Closed" },
-                ].map((h) => (
+                {HOURS.map((h) => (
                   <div key={h.day} style={hoursRowStyle}>
                     <span style={{ color: colors.textMuted, fontSize: "0.9rem" }}>{h.day}</span>
-                    <span style={{ color: h.hours === "Closed" ? colors.textDim : colors.text, fontWeight: 600, fontSize: "0.9rem" }}>
+                    <span style={{
+                      color: h.hours === "Closed" ? colors.textDim : colors.text,
+                      fontWeight: h.hours === "Closed" ? 500 : 600,
+                      fontSize: "0.9rem",
+                    }}>
                       {h.hours}
                     </span>
                   </div>
@@ -157,12 +240,23 @@ export function HomePage() {
           <h2 style={{ ...sectionTitleStyle, fontSize: "2.5rem", marginBottom: "1rem" }}>
             Ready for a Fresh Look?
           </h2>
-          <p style={{ color: colors.textMuted, fontSize: "1.1rem", marginBottom: "2rem", maxWidth: "500px", margin: "0 auto 2rem" }}>
-            Book your appointment with Errol Jones in seconds. Walk in ready.
+          <p style={ctaSubStyle}>
+            Book your appointment with Errol Jones. No walk-ins — secure your slot online in seconds.
           </p>
-          <Link to="/auth/login?mode=client" style={{ ...primaryButtonStyle, fontSize: "1.1rem", padding: "0.9rem 2.5rem" }}>
-            Book Now — It's Free
-          </Link>
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <Link
+              to="/auth/login?mode=client"
+              style={{ ...primaryButtonStyle, fontSize: "1.05rem", padding: "0.9rem 2.5rem" }}
+            >
+              Book Appointment
+            </Link>
+            <a
+              href="tel:07577378237"
+              style={{ ...secondaryButtonStyle, fontSize: "1.05rem", padding: "0.9rem 2.5rem" }}
+            >
+              Call 07577 378237
+            </a>
+          </div>
         </div>
       </section>
     </div>
@@ -208,17 +302,38 @@ const heroTitleStyle: React.CSSProperties = {
 
 const heroSubStyle: React.CSSProperties = {
   color: colors.textMuted,
-  fontSize: "clamp(1rem, 2vw, 1.2rem)",
+  fontSize: "clamp(1rem, 2vw, 1.15rem)",
   maxWidth: "520px",
-  margin: "0 auto",
+  margin: "0 auto 0",
   lineHeight: 1.65,
+};
+
+const heroBtnRowStyle: React.CSSProperties = {
+  display: "flex",
+  gap: "1rem",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  marginTop: "2rem",
+};
+
+const heroSmallPrintStyle: React.CSSProperties = {
+  color: colors.textDim,
+  fontSize: "0.78rem",
+  marginTop: "1.5rem",
+  letterSpacing: "0.03em",
+};
+
+const heroAddressStyle: React.CSSProperties = {
+  color: colors.textMuted,
+  fontSize: "0.82rem",
+  margin: "0.4rem 0 0",
 };
 
 const statsBgStyle: React.CSSProperties = {
   backgroundColor: colors.surface,
   borderTop: `1px solid ${colors.border}`,
   borderBottom: `1px solid ${colors.border}`,
-  padding: "2rem 1.25rem",
+  padding: "2.5rem 1.25rem",
 };
 
 const statsInnerStyle: React.CSSProperties = {
@@ -232,20 +347,28 @@ const statItemStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "0.25rem",
+  gap: "0.15rem",
 };
 
 const statValueStyle: React.CSSProperties = {
   fontSize: "2rem",
   fontWeight: 900,
   color: colors.accent,
+  lineHeight: 1,
 };
 
 const statLabelStyle: React.CSSProperties = {
   fontSize: "0.8rem",
-  color: colors.textMuted,
+  color: colors.text,
+  fontWeight: 600,
   textTransform: "uppercase",
-  letterSpacing: "0.08em",
+  letterSpacing: "0.06em",
+  marginTop: "0.25rem",
+};
+
+const statSubStyle: React.CSSProperties = {
+  fontSize: "0.72rem",
+  color: colors.textDim,
 };
 
 const sectionStyle: React.CSSProperties = {
@@ -271,7 +394,8 @@ const servicesGridStyle: React.CSSProperties = {
 
 const serviceCardStyle: React.CSSProperties = {
   textAlign: "center",
-  transition: "border-color 0.2s",
+  display: "flex",
+  flexDirection: "column",
 };
 
 const serviceIconStyle: React.CSSProperties = {
@@ -290,15 +414,27 @@ const serviceNameStyle: React.CSSProperties = {
 const serviceDescStyle: React.CSSProperties = {
   color: colors.textMuted,
   fontSize: "0.875rem",
-  margin: "0 0 0.75rem",
+  margin: "0 0 1rem",
   lineHeight: 1.6,
+  flex: 1,
+};
+
+const serviceFooterStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginTop: "auto",
 };
 
 const servicePriceStyle: React.CSSProperties = {
   color: colors.accent,
-  fontWeight: 700,
-  fontSize: "0.9rem",
-  margin: 0,
+  fontWeight: 800,
+  fontSize: "1rem",
+};
+
+const serviceDurationStyle: React.CSSProperties = {
+  color: colors.textDim,
+  fontSize: "0.78rem",
 };
 
 const testimonialsGridStyle: React.CSSProperties = {
@@ -327,10 +463,21 @@ const testimonialTextStyle: React.CSSProperties = {
   flex: 1,
 };
 
+const testimonialFooterStyle: React.CSSProperties = {
+  borderTop: `1px solid ${colors.border}`,
+  paddingTop: "0.75rem",
+};
+
 const testimonialNameStyle: React.CSSProperties = {
   color: colors.text,
   fontWeight: 700,
   fontSize: "0.85rem",
+  margin: "0 0 0.15rem",
+};
+
+const testimonialMetaStyle: React.CSSProperties = {
+  color: colors.textDim,
+  fontSize: "0.75rem",
   margin: 0,
 };
 
@@ -359,7 +506,7 @@ const infoValueStyle: React.CSSProperties = {
 const hoursRowStyle: React.CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
-  padding: "0.6rem 0",
+  padding: "0.55rem 0",
   borderBottom: `1px solid ${colors.border}`,
 };
 
@@ -369,3 +516,10 @@ const ctaSectionStyle: React.CSSProperties = {
   borderTop: `1px solid ${colors.border}`,
 };
 
+const ctaSubStyle: React.CSSProperties = {
+  color: colors.textMuted,
+  fontSize: "1.05rem",
+  maxWidth: "500px",
+  margin: "0 auto 2rem",
+  lineHeight: 1.65,
+};
