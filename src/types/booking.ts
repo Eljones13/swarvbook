@@ -5,6 +5,14 @@ export type BookingStatus =
   | "no_show"
   | "cancelled";
 
+export const BOOKING_STATUSES: BookingStatus[] = [
+  "pending",
+  "confirmed",
+  "completed",
+  "no_show",
+  "cancelled",
+];
+
 export interface Service {
   id: string;
   name: string;
@@ -35,15 +43,21 @@ export interface Booking {
 }
 
 /**
- * Booking row joined with service and client names.
- * Matches the shape returned by our Supabase select with
- * `services(name)` and `clients(full_name,first_name,last_name)`.
+ * Booking row joined with service, client, and optional staff.
+ * `staff` is populated when the query includes `staff(name)`.
  */
 export interface BookingWithDetails extends Booking {
-  services: { name: string } | null;
+  services: {
+    name: string;
+    price: number | null;
+    duration_minutes: number | null;
+  } | null;
   clients: {
     full_name: string | null;
     first_name: string | null;
     last_name: string | null;
+    email: string | null;
+    phone: string | null;
   } | null;
+  staff?: { name: string } | null;
 }

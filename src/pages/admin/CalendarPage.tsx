@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { AdminHeader } from "../../components/admin/AdminHeader";
 import { useStaff } from "../../hooks/useStaff";
 import { useBookings } from "../../hooks/useBookings";
+import { BookingDetailDrawer } from "../../components/admin/BookingDetailDrawer";
 import type { BookingWithDetails, BookingStatus } from "../../types/booking";
 
 /* ─── constants ─── */
@@ -57,6 +58,8 @@ export function CalendarPage() {
 
   const [selectedStaffId, setSelectedStaffId] = useState<string | null>(null);
   const [weekOffset, setWeekOffset] = useState(0);
+  const [selectedBooking, setSelectedBooking] = useState<BookingWithDetails | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Compute the Monday of the target week
   const weekStart = useMemo(() => {
@@ -199,7 +202,14 @@ export function CalendarPage() {
                         }}
                       >
                         {items.map((b) => (
-                          <BookingChip key={b.id} booking={b} />
+                          <BookingChip
+                            key={b.id}
+                            booking={b}
+                            onClick={() => {
+                              setSelectedBooking(b);
+                              setDrawerOpen(true);
+                            }}
+                          />
                         ))}
                       </td>
                     );
@@ -221,6 +231,12 @@ export function CalendarPage() {
           </p>
         )}
       </main>
+
+      <BookingDetailDrawer
+        booking={selectedBooking}
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      />
     </div>
   );
 }
@@ -235,7 +251,13 @@ const STATUS_COLORS: Record<BookingStatus, { bg: string; fg: string }> = {
   cancelled: { bg: "#1f2937", fg: "#6b7280" },
 };
 
-function BookingChip({ booking }: { booking: BookingWithDetails }) {
+function BookingChip({
+  booking,
+  onClick,
+}: {
+  booking: BookingWithDetails;
+  onClick: () => void;
+}) {
   const colors = STATUS_COLORS[booking.status] || STATUS_COLORS.pending;
   const time = new Date(booking.start_time).toLocaleTimeString("en-GB", {
     hour: "2-digit",
@@ -244,6 +266,7 @@ function BookingChip({ booking }: { booking: BookingWithDetails }) {
 
   return (
     <div
+      onClick={onClick}
       style={{
         padding: "0.25rem 0.4rem",
         borderRadius: "0.25rem",
@@ -251,6 +274,7 @@ function BookingChip({ booking }: { booking: BookingWithDetails }) {
         marginBottom: "0.2rem",
         fontSize: "0.7rem",
         lineHeight: 1.3,
+        cursor: "pointer",
       }}
     >
       <div style={{ fontWeight: 600, color: colors.fg }}>

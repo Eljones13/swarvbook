@@ -10,6 +10,9 @@ import { ClientsPage } from "./pages/admin/ClientsPage.tsx";
 import { CampaignsPage } from "./pages/admin/CampaignsPage.tsx";
 import { CalendarPage } from "./pages/admin/CalendarPage.tsx";
 import { RequireAuth } from "./components/auth/RequireAuth.tsx";
+import { ClientBookPage } from "./pages/clientBookPage.tsx";
+import { ClientMyBookingsPage } from "./pages/clientMyBookingsPage.tsx";
+import { ClientPortfolioPage } from "./pages/clientPortfolioPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +45,30 @@ createRoot(document.getElementById("root")!).render(
             element={
               <RequireAuth>
                 <CalendarPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/book"
+            element={
+              <RequireAuth>
+                <ClientBookPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/my-bookings"
+            element={
+              <RequireAuth>
+                <ClientMyBookingsPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/portfolio"
+            element={
+              <RequireAuth>
+                <ClientPortfolioPage />
               </RequireAuth>
             }
           />
