@@ -6,6 +6,7 @@ import { supabase } from "../../lib/supabase";
 export function SignupPage() {
   const [searchParams] = useSearchParams();
   const refCode = searchParams.get("ref");
+  const mode = searchParams.get("mode");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,7 +43,10 @@ export function SignupPage() {
           <p style={{ color: "#94a3b8", fontSize: "0.9rem", lineHeight: 1.5 }}>
             We sent a confirmation link to <strong>{email}</strong>. Click the
             link to activate your account, then{" "}
-            <Link to="/auth/login" style={{ color: "#60a5fa" }}>
+            <Link
+              to={mode ? `/auth/login?mode=${mode}` : "/auth/login"}
+              style={{ color: "#60a5fa" }}
+            >
               sign in
             </Link>
             .
@@ -101,8 +105,11 @@ export function SignupPage() {
 
         <p style={{ marginTop: "1rem", fontSize: "0.85rem", color: "#94a3b8" }}>
           Already have an account?{" "}
-          <Link to="/auth/login" style={{ color: "#60a5fa" }}>
-            Sign in
+          <Link
+            to={mode ? `/auth/login?mode=${mode}` : "/auth/login"}
+            style={{ color: "#60a5fa" }}
+          >
+            Log in
           </Link>
         </p>
       </form>

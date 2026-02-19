@@ -1,10 +1,12 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 
 export function LoginPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get("mode");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,7 +27,7 @@ export function LoginPage() {
     if (err) {
       setError(err.message);
     } else {
-      navigate("/admin/clients", { replace: true });
+      navigate(mode === "admin" ? "/admin/calendar" : "/book", { replace: true });
     }
   }
 
@@ -65,9 +67,12 @@ export function LoginPage() {
         </button>
 
         <p style={{ marginTop: "1rem", fontSize: "0.85rem", color: "#94a3b8" }}>
-          Don't have an account?{" "}
-          <Link to="/auth/signup" style={{ color: "#60a5fa" }}>
-            Sign up
+          New here?{" "}
+          <Link
+            to={mode ? `/auth/signup?mode=${mode}` : "/auth/signup"}
+            style={{ color: "#60a5fa" }}
+          >
+            Create an account
           </Link>
         </p>
       </form>
